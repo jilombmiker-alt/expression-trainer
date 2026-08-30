@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafafa">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>设置 · 纸上声场</title>
+  <link rel="stylesheet" href="knowledge-studio.css?v=2">
+</head>
+<body class="theme-v0 settings-page">
+  <a class="skip-link" href="#settings-main">跳到设置内容</a>
+  <div class="app-shell">
+    <header class="app-header">
+      <a id="settings-brand" class="brand" href="concept-editorial.html?theme=v0" aria-label="返回纸上声场训练页">
+        <svg aria-hidden="true" viewBox="0 0 32 32"><path d="M7 5.5h18v21H7zM11 11h10M11 16h10M11 21h6"/></svg>
+        <span>纸上声场</span><small id="settings-brand-subtitle">/ SETTINGS</small>
+      </a>
+      <nav class="step-nav" aria-label="设置项目">
+        <button class="step-button active" type="button"><b>01</b><span>模型接入</span></button>
+      </nav>
+      <a id="settings-back" class="style-switch" href="concept-editorial.html?theme=v0">返回训练 <span>→</span></a>
+    </header>
+    <main id="settings-main" class="studio-main">
+      <section class="screen-stage settings-stage">
+        <div class="screen-intro">
+          <div class="eyebrow"><span>01</span> MODEL CONNECTION</div>
+          <h1>设置你的模型，<br>再开始训练。</h1>
+          <p id="settings-reason">AI 语义判断会直接调用你选择的模型，费用由你的模型账户承担。</p>
+          <dl class="feature-list">
+            <div><dt>01</dt><dd><b>用户自行付费</b><span>不消耗产品方模型额度</span></dd></div>
+            <div><dt>02</dt><dd><b>临时保存密钥</b><span>只保存在服务端内存</span></dd></div>
+            <div><dt>03</dt><dd><b>随时断开</b><span>8 小时或服务重启后失效</span></dd></div>
+          </dl>
+        </div>
+        <form id="connection-form" class="workbench settings-workbench" novalidate>
+          <div class="workbench-head">
+            <div><span>MODEL PROVIDER</span><h2>模型接入</h2></div>
+            <strong id="connection-state" class="connection-state state-idle">未接入</strong>
+          </div>
+          <label class="field" for="provider"><span>模型厂商</span><select id="provider" name="provider" required></select><small id="provider-note">正在读取可用厂商…</small></label>
+          <label class="field" for="model"><span>模型名称</span><input id="model" name="model" autocomplete="off" spellcheck="false" required placeholder="填写你账户中可用的模型名称"><small>模型会持续更新，因此这里直接填写你账户中实际可用的名称。</small></label>
+          <label class="field" for="api-key"><span>API Key</span><div class="secret-field"><input id="api-key" name="apiKey" type="password" autocomplete="off" required placeholder="只在本次连接中使用"><button id="toggle-secret" class="ghost-button" type="button" aria-label="显示 API Key">显示</button></div><small>不要填写账号密码。测试连接会调用一次模型，可能产生极少量费用。</small></label>
+          <div id="connected-summary" class="connected-summary" hidden></div>
+          <div class="action-row settings-actions">
+            <p id="form-message" class="form-error" role="status" aria-live="polite"></p>
+            <button id="disconnect" class="ghost-button disconnect-button" type="button" hidden>断开连接</button>
+            <button id="connect" class="primary-action" type="submit"><span data-connect-label>保存并测试</span><span aria-hidden="true">→</span></button>
+          </div>
+          <button id="return-after-connect" class="continue-training" type="button" hidden>继续刚才的训练 <span aria-hidden="true">→</span></button>
+        </form>
+      </section>
+    </main>
+    <footer class="app-footer"><span>BYOK · 密钥不写入网页与浏览器存储</span><a id="footer-back" href="concept-editorial.html?theme=v0">返回训练</a></footer>
+  </div>
+  <script src="frontend-foundation.js?v=2"></script>
+  <script src="model-connections.js?v=2"></script>
+</body>
+</html>

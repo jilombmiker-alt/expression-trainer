@@ -1,0 +1,6 @@
+funasr>=1.2,<2
+modelscope>=1.20,<2
+soundfile>=0.12,<1
+imageio-ffmpeg>=0.5,<1
+torch>=2.1
+kaldi-native-fbank>=1.20

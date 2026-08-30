@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.venv-funasr/
+.model-cache/
+.p0-data/
+models/*.onnx
+models/sherpa-onnx-*/
+dist/
+.DS_Store
+.idea/
+
+demo-*.html
+prompt-playground.html
+listenhub-*.png

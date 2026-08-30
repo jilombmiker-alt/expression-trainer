@@ -1,0 +1,8 @@
+# 2026-08-30 本机已安装并完成代码级测试的直接依赖版本。
+# 这是直接依赖基线，不冒充跨平台完整传递依赖锁。
+funasr==1.4.6
+modelscope==1.37.1
+soundfile==0.13.1
+imageio-ffmpeg==0.6.0
+torch==2.8.0
+kaldi-native-fbank==1.22.3

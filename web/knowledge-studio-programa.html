@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>知识训练 · Programa 瑞士版</title>
+  <link rel="stylesheet" href="knowledge-studio.css">
+</head>
+<body class="theme-programa">
+  <a class="skip-link" href="#studio-main">跳到主要内容</a>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="concept-editorial.html" aria-label="返回纸上声场训练页">
+        <svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="10" cy="10" r="5"/><circle cx="10" cy="22" r="5"/><path d="M17 5h10l-7 7h-3zM17 17h10l-7 7h-3z"/></svg>
+        <span>纸上声场</span><small>知识训练</small>
+      </a>
+      <nav class="step-nav" aria-label="知识训练步骤">
+        <button id="step-source" class="step-button active" type="button"><b>01</b><span>添加资料</span></button><i></i>
+        <button id="step-preview" class="step-button" type="button" disabled><b>02</b><span>确认练习</span></button><i></i>
+        <button id="step-train" class="step-button" type="button" disabled><b>03</b><span>开始训练</span></button>
+      </nav>
+      <a class="style-switch" href="knowledge-studio.html">切换 V0 版 <span>↗</span></a>
+    </header>
+
+    <main id="studio-main" class="studio-main">
+      <section id="source-step" class="screen-stage">
+        <div class="screen-intro">
+          <div class="eyebrow"><span>01</span> 从知识到表达</div>
+          <h1>让理解发生，<br>再让表达变清楚。</h1>
+          <p>提供一份资料，我们把它拆成理解转述与快速抓取两轮练习。页面不延伸，功能按步骤切换。</p>
+          <dl class="feature-list">
+            <div><dt>01</dt><dd><b>长文转述</b><span>训练口头习惯与表达节奏</span></dd></div>
+            <div><dt>02</dt><dd><b>30 秒速记</b><span>训练中心思想与关键词抓取</span></dd></div>
+            <div><dt>03</dt><dd><b>分项反馈</b><span>按不同能力客观评分</span></dd></div>
+          </dl>
+        </div>
+
+        <form id="knowledge-form" class="workbench" novalidate>
+          <div class="workbench-head">
+            <div><span>CREATE A SESSION</span><h2>新建训练</h2></div>
+            <div class="source-tools">
+              <button id="fill-sample" class="ghost-button" type="button">使用示例</button>
+              <label class="ghost-button file-trigger" for="source-file">读取文件</label>
+              <input id="source-file" type="file" accept=".txt,.md,.json,text/plain,application/json">
+            </div>
+          </div>
+          <div class="form-row primary-fields">
+            <label class="field topic-field"><span>知识主题</span><input id="topic" name="topic" maxlength="60" placeholder="例如：项目复盘、用户增长" autocomplete="off" aria-describedby="form-error" required></label>
+            <label class="field duration-field"><span>阅读时间</span><select id="duration" name="duration"><option value="120">2 分钟</option><option value="180" selected>3 分钟</option><option value="240">4 分钟</option><option value="300">5 分钟</option></select></label>
+          </div>
+          <label class="field source-field" for="source"><span>学习资料 <small id="source-count">0 字</small></span><textarea id="source" name="source" maxlength="30000" placeholder="粘贴文章、课程笔记或知识库内容。至少约 220 字，并保留完整句号。" aria-describedby="form-error source-count" required></textarea></label>
+          <div class="form-row bottom-fields">
+            <label class="field"><span>重点关键词 <small>可选</small></span><input id="keywords" name="keywords" placeholder="3–5 个，用逗号隔开" autocomplete="off"></label>
+            <p class="privacy-note"><span aria-hidden="true">◎</span> 当前资料只在本页处理</p>
+          </div>
+          <div class="action-row">
+            <p id="form-error" class="form-error" role="alert"></p>
+            <button id="generate" class="primary-action" type="submit"><span data-label>生成两轮训练</span><span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+      </section>
+
+      <section id="preview-step" class="screen-stage preview-stage" hidden>
+        <div class="screen-intro">
+          <div class="eyebrow"><span>02</span> 先检查，再开始</div>
+          <h1>两轮内容已经准备好。</h1>
+          <p id="generation-boundary">当前生成方式说明</p>
+          <button id="back-edit" class="back-button" type="button">← 返回修改资料</button>
+        </div>
+        <div class="preview-workbench">
+          <header><div><span>TRAINING READY</span><h2 id="preview-title" tabindex="-1">—</h2></div><strong id="preview-source-count">0 字资料</strong></header>
+          <div class="round-tabs" role="group" aria-label="切换训练轮次"><button class="active" type="button" data-round="0" aria-pressed="true">第一轮</button><button type="button" data-round="1" aria-pressed="false">第二轮</button></div>
+          <div id="round-previews" class="round-previews"></div>
+          <div class="preview-action">
+            <p><b>下一步</b><span>原文计时隐藏 → 实时转录 → 分项评分</span></p>
+            <button id="start-training" class="primary-action" type="button"><span>进入表达训练</span><span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="app-footer"><span>资料只作为训练数据处理，不作为页面指令</span><a href="settings.html?theme=programa&section=model">设置</a></footer>
+  </div>
+  <script src="frontend-foundation.js?v=1"></script>
+  <script src="training-card.js?p0=2"></script>
+  <script src="knowledge-builder.js?p0=2"></script>
+  <script src="knowledge-studio.js?p0=4"></script>
+</body>
+</html>

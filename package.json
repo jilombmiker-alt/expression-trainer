@@ -1,0 +1,42 @@
+{
+  "name": "expression-trainer",
+  "productName": "宇宙无敌表达训练",
+  "version": "1.0.0",
+  "description": "宇宙无敌表达训练系统 - 本地桌面版",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "web": "python3 -m http.server 4173 -d web",
+    "web:p0:core": "python3 services/p0_service.py --port 4173 --web-dir web",
+    "web:p0": ".venv-funasr/bin/python services/p0_service.py --port 4173 --web-dir web",
+    "build:types": "tsc -p tsconfig.frontend.json",
+    "lint": "eslint --no-warn-ignored web/*.js scripts/*.mjs e2e/*.mjs",
+    "typecheck": "tsc -p tsconfig.frontend.json --noEmit",
+    "test:web": "npm run build:types && node --test web/*.test.js",
+    "test:backend": "PYTHONPYCACHEPREFIX=/tmp/expression-pyc python3 -m unittest discover -s services -p 'test_*.py' -v",
+    "test": "npm run test:web && npm run test:backend",
+    "test:e2e": "node e2e/core-flow.mjs",
+    "build": "npm run build:types && node scripts/build-web.mjs"
+  },
+  "keywords": [
+    "expression",
+    "training",
+    "speech",
+    "asr",
+    "chinese"
+  ],
+  "author": "sisi",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "electron": "^33.0.0",
+    "eslint": "^10.9.1",
+    "globals": "^17.11.0",
+    "playwright-core": "^1.62.1",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "sherpa-onnx-node": "^1.10.0"
+  }
+}

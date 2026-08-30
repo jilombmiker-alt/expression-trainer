@@ -1,0 +1,7 @@
+interface:
+  display_name: "表达知识训练"
+  short_description: "把知识库资料转成可评分的速记与表达训练"
+  brand_color: "#184F43"
+  default_prompt: "Use $expression-knowledge-training to turn my selected knowledge source into a grounded Chinese recall and speaking exercise."
+policy:
+  allow_implicit_invocation: true
