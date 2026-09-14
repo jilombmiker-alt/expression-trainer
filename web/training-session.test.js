@@ -2,6 +2,13 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const Session = require('./training-session');
 
+test('all nine reading durations survive draft reload', () => {
+  for (const readingSeconds of [30, 60, 90, 120, 150, 180, 210, 240, 300]) {
+    assert.equal(Session.normalize(Session.snapshot({ step: 1, readingSeconds })).readingSeconds, readingSeconds);
+  }
+  assert.equal(Session.snapshot({step: 1, readingSeconds: 270}).readingSeconds, 180);
+});
+
 function memory(initial) {
   const values = new Map(Object.entries(initial || {}));
   return { getItem: (key) => values.get(key) || null, setItem: (key, value) => values.set(key, value), removeItem: (key) => values.delete(key) };
@@ -33,4 +40,3 @@ test('audio task identity survives refresh without microphone state', () => {
   assert.equal(result.audioTaskRound, 0);
   assert.equal('recording' in result, false);
 });
-

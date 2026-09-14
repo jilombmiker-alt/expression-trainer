@@ -1,0 +1,37 @@
+# Host-funded private beta on a single persistent VM. Not a serverless temporary filesystem.
+# EXPRESSION_DOMAIN must be supplied by the operator. Private env is excluded from Git/build context.
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    env_file: ../.private-deploy/beta.env
+    environment:
+      EXPRESSION_ENV: production
+      EXPRESSION_PUBLIC_ORIGIN: https://${EXPRESSION_DOMAIN:?Set the verified domain}
+      EXPRESSION_SECURE_COOKIE: 'true'
+      EXPRESSION_DATA_DIR: /data
+      MODELSCOPE_CACHE: /models
+    volumes: ['training_data:/data', 'model_cache:/models']
+    expose: ['4173']
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    pids_limit: 256
+    stop_grace_period: 30s
+  gateway:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ['80:80', '443:443']
+    environment:
+      EXPRESSION_DOMAIN: ${EXPRESSION_DOMAIN:?Set the verified domain}
+    volumes:
+      - ./Caddyfile.sponsored:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [app]
+volumes:
+  training_data:
+  model_cache:
+  caddy_data:
+  caddy_config:

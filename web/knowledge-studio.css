@@ -36,5 +36,17 @@ button,.file-trigger,a{touch-action:manipulation}button{cursor:pointer}[hidden]{
 .secret-field{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.secret-field .ghost-button{min-width:66px}.settings-workbench .field small{color:var(--muted);font-size:10px;line-height:1.45}
 .connected-summary{padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:var(--radius-button);font-size:11px;line-height:1.6}.connected-summary b{display:block;margin-bottom:2px;font-size:12px}.settings-actions{margin-top:auto}.settings-actions .form-error.success{color:#18794e}.disconnect-button{color:var(--danger)}
 .continue-training{display:flex;align-items:center;justify-content:space-between;min-height:46px;padding:0 15px;color:var(--ink);background:var(--soft);border:1px solid var(--ink);border-radius:var(--radius-button);font-size:12px;font-weight:500}
+/* Mobile import prioritizes the user's material rather than repeated guidance. */
+@media(max-width:680px){
+ body:not(.settings-page) .app-shell{grid-template-rows:48px minmax(0,1fr) 30px}
+ #source-step{gap:8px;padding:10px 12px}
+ #source-step .screen-intro .eyebrow,#source-step .screen-intro h1 br,#source-step .workbench-head>div:first-child{display:none}
+ #source-step .screen-intro h1{font-size:20px;line-height:1.3;letter-spacing:-.025em}
+ #source-step .workbench{padding:10px;gap:8px;grid-template-rows:auto auto minmax(100px,1fr) auto auto;box-shadow:none}
+ #source-step .workbench-head{padding:0;border:0;justify-content:flex-end}
+ #source-step .source-tools{width:100%}#source-step .source-tools>*{flex:1}
+ #source-step .field textarea{font-size:16px;line-height:1.7}
+ #source-step .action-row{padding-top:6px}#source-step .primary-action{width:100%}
+}
 @media(max-width:900px){.settings-stage{grid-template-columns:minmax(210px,.6fr) minmax(440px,1.4fr)}}
 @media(max-width:680px){.settings-stage{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.settings-workbench{align-self:stretch;max-height:none;gap:10px}.settings-page .screen-intro>p{display:block;margin-top:8px;font-size:11px}.settings-page .app-header .style-switch{display:block;margin-left:auto}.settings-page .step-nav{display:none}.settings-actions{display:grid;grid-template-columns:1fr auto}.settings-actions .form-error{grid-column:1/-1}.settings-actions .primary-action{min-width:150px}.secret-field .ghost-button{min-height:44px}}

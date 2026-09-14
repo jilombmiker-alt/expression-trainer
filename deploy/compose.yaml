@@ -1,0 +1,42 @@
+# Run from repository root with: docker compose --env-file deploy/.env -f deploy/compose.yaml up -d --build
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    environment:
+      EXPRESSION_ENV: production
+      EXPRESSION_PUBLIC_ORIGIN: https://${EXPRESSION_DOMAIN:?Set a real HTTPS domain}
+      EXPRESSION_ADMIN_TOKEN: ${EXPRESSION_ADMIN_TOKEN:?Set a private operator access code}
+      EXPRESSION_SECURE_COOKIE: 'true'
+      EXPRESSION_REQUIRE_BYOK: 'true'
+      EXPRESSION_DATA_DIR: /data
+      MODELSCOPE_CACHE: /models
+    volumes:
+      - training_data:/data
+      - model_cache:/models
+    # No host port: only the gateway can access the Python HTTP server.
+    expose: ['4173']
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    pids_limit: 256
+    stop_grace_period: 30s
+  gateway:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ['80:80', '443:443']
+    environment:
+      EXPRESSION_DOMAIN: ${EXPRESSION_DOMAIN:?Set a real HTTPS domain}
+      # Initial private acceptance only. Remove this gate only after public-release checks.
+      BETA_PASSWORD_HASH: ${BETA_PASSWORD_HASH:?Set a Caddy password hash for private acceptance}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [app]
+volumes:
+  training_data:
+  model_cache:
+  caddy_data:
+  caddy_config:

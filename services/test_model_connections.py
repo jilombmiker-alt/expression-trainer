@@ -12,6 +12,16 @@ from model_connections import (
 
 
 class ModelConnectionTests(unittest.TestCase):
+    def test_deepseek_light_request_explicitly_disables_thinking(self):
+        settings = validate_settings('deepseek', 'deepseek-v4-flash', 'sk-test-secret')
+        settings['thinkingMode'] = 'disabled'
+        request = build_request(settings, 'Return a JSON evaluation.', max_tokens=1200)
+        payload = json.loads(request.data)
+        self.assertEqual(payload['model'], 'deepseek-v4-flash')
+        self.assertEqual(payload['thinking'], {'type': 'disabled'})
+        self.assertEqual(payload['max_tokens'], 1200)
+        self.assertNotIn('sk-test-secret', request.data.decode())
+
     def test_catalog_has_four_allowlisted_providers_without_internal_urls(self):
         catalog = provider_catalog()
         self.assertEqual([item["id"] for item in catalog], ["openai", "deepseek", "anthropic", "gemini"])

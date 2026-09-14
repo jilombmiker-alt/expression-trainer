@@ -18,6 +18,7 @@
   const returnButton = document.getElementById('return-after-connect');
   let providers = [];
   let pendingConnectionId = '';
+  let sponsored = false;
 
   function getStoredId() { try { return sessionStorage.getItem(storageKey) || ''; } catch (_) { return ''; } }
   function setStoredId(value) { try { if (value) sessionStorage.setItem(storageKey, value); else sessionStorage.removeItem(storageKey); } catch (_) {} }
@@ -86,6 +87,7 @@
   });
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (sponsored || window.ExpressionPreview) return;
     if (!provider.value || !model.value.trim() || !apiKey.value.trim()) {
       setStatus('error', '待补充');
       setMessage('请完整填写模型厂商、模型名称和 API Key。', 'error');
@@ -140,7 +142,39 @@
       document.querySelector('#settings-brand svg').innerHTML = '<circle cx="10" cy="10" r="5"/><circle cx="10" cy="22" r="5"/><path d="M17 5h10l-7 7h-3zM17 17h10l-7 7h-3z"/>';
     }
     if (query.get('required') === '1') document.getElementById('settings-reason').textContent = '开始训练前，请先接入你自己的模型。接入成功后可以继续刚才选择的内容。';
-    try { await loadProviders(); await restore(); }
+    if (window.ExpressionPreview) {
+      document.querySelector('.screen-intro h1').textContent = '先体验训练，无需填写密钥。';
+      document.getElementById('settings-reason').textContent = '当前为前端测试版：选题、导入文字、两轮练习和本机成长记录可用。AI 语义判断、高精度转录及云端后台尚未接通。';
+      document.querySelector('.feature-list').hidden = true;
+      form.querySelectorAll('.field').forEach((item) => { item.hidden = true; });
+      form.querySelectorAll('input,select,button').forEach((item) => { item.disabled = true; });
+      connectButton.hidden = true; disconnectButton.hidden = true;
+      setStatus('idle', '前端测试版');
+      summary.hidden = false; summary.textContent = '不用提交 API Key。浏览器语音识别是否可用取决于设备与网络；识别不可用时可以输入文字完成流程。';
+      setMessage('本地评分仅用于体验，不是经过 AI 核验的能力测评。');
+      if (returnButton) { returnButton.hidden = false; returnButton.disabled = false; returnButton.textContent = '返回训练 →'; }
+      document.querySelector('.app-footer > span').textContent = '前端测试 · 不收集模型密钥 · 记录仅保存在本机';
+      return;
+    }
+    try {
+      const health = await Frontend.requestJson('/api/semantic/health');
+      sponsored = health.billingMode === 'sponsored' && health.byokRequired === false;
+      if (sponsored) {
+        document.querySelector('.screen-intro h1').textContent = '内测模型已由维护者提供。';
+        document.getElementById('settings-reason').textContent = '你不需要填写 API Key。训练会使用维护者的模型额度，并受每日调用次数限制。';
+        document.querySelector('.feature-list').hidden = true;
+        form.querySelectorAll('.field').forEach((item) => { item.hidden = true; });
+        form.querySelectorAll('input,select').forEach((item) => { item.disabled = true; });
+        connectButton.hidden = true; disconnectButton.hidden = true;
+        setStatus(health.available ? 'ready' : 'error', health.available ? '内测模型已接入' : '内测模型未就绪');
+        summary.hidden = false; summary.textContent = `当前模型：${health.model || '待配置'}。密钥仅在后端使用，不提供给访问者。`;
+        setMessage('费用由维护者承担；达到内测上限时会暂停 AI 分析。');
+        if (returnButton) { returnButton.hidden = false; returnButton.textContent = '返回训练 →'; }
+        document.querySelector('.app-footer > span').textContent = '内测模式 · 模型由维护者提供';
+        return;
+      }
+      await loadProviders(); await restore();
+    }
     catch (error) { setStatus('error', '服务不可用'); setMessage(error.userMessage || '暂时无法读取模型接入服务。', 'error'); }
   })();
 })();

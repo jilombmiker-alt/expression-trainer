@@ -14,6 +14,7 @@ test('manual stop never restarts recognition', () => {
 
 test('fatal recognition errors never restart', () => {
   assert.equal(LiveRecognition.decideEnd({ intentActive: true, stopReason: 'error' }).reason, 'error');
+  assert.equal(LiveRecognition.decideEnd({ intentActive: false, stopReason: 'error' }).reason, 'error');
   assert.equal(LiveRecognition.classifyError('not-allowed').fatal, true);
 });
 

@@ -28,17 +28,21 @@
       text: text(item.text, 5000), engine: text(item.engine, 30), confidence: Number.isFinite(item.confidence) ? item.confidence : null,
       pauses: Array.isArray(item.pauses) ? item.pauses.map(Number).filter(Number.isFinite).slice(0, 500) : [],
       durationMs: Number(item.durationMs || 0), needsConfirmation: Boolean(item.needsConfirmation), warning: text(item.warning, 240),
-      segments: Array.isArray(item.segments) ? item.segments.slice(0, 2000) : []
+      segments: Array.isArray(item.segments) ? item.segments.slice(0, 2000) : [],
+      pauseMeasurement: jsonSafe(item.pauseMeasurement, 50000)
     } : null);
     return {
       schemaVersion: SCHEMA_VERSION, updatedAt: new Date().toISOString(),
       step: state.step, maxStep: Math.max(state.step, Number(state.maxStep || 0)),
-      scene: text(state.scene, 80), readingSeconds: [120, 180, 240, 300].includes(Number(state.readingSeconds)) ? Number(state.readingSeconds) : 180,
+      scene: text(state.scene, 80), readingSeconds: [30, 60, 90, 120, 150, 180, 210, 240, 300].includes(Number(state.readingSeconds)) ? Number(state.readingSeconds) : 180,
       transcripts: array(state.transcripts, 2, (item) => text(item, 5000)),
       asrMeta, transcriptConfirmed: array(state.transcriptConfirmed, 2, Boolean),
       results: array(state.results, 2, (item) => jsonSafe(item, 150000)),
       weights: jsonSafe(state.weights, 5000), weightPreset: jsonSafe(state.weightPreset, 1000),
       importedSet: jsonSafe(state.importedSet, 80000), importMessage: text(state.importMessage, 240),
+      backendRunId: text(state.backendRunId, 40), backendAttemptId: text(state.backendAttemptId, 40),
+      backendAttemptKey: text(state.backendAttemptKey, 40), answerTiming: jsonSafe(state.answerTiming, 1000),
+      submittedRequest: jsonSafe(state.submittedRequest, 30000), completedAudioIds: array(state.completedAudioIds, 2, validTaskId),
       audioTaskId: validTaskId(state.audioTaskId), audioTaskRound: [0, 1].includes(state.audioTaskRound) ? state.audioTaskRound : null
     };
   }

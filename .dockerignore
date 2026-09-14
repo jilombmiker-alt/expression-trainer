@@ -1,0 +1,13 @@
+.git
+node_modules
+.p0-data
+.model-cache
+.venv-funasr
+.env*
+.private-deploy
+.vefaas
+deploy/.env
+android
+docs
+dist
+*.zip

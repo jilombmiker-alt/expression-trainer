@@ -1,0 +1,32 @@
+plugins { id 'com.android.application' }
+
+def compileOnly = providers.gradleProperty('validationOnly').orElse('false').get() == 'true'
+def appOrigin = providers.gradleProperty('appOrigin').orElse('').get()
+if (compileOnly) appOrigin = 'https://build-validation.invalid'
+if (!appOrigin.matches('https://[a-zA-Z0-9][a-zA-Z0-9.-]+(:[0-9]+)?') || appOrigin.contains('localhost') || appOrigin.contains('127.0.0.1')) {
+    throw new GradleException('Provide -PappOrigin=https://YOUR_VERIFIED_DOMAIN (origin only). Never ship localhost.')
+}
+gradle.taskGraph.whenReady { graph ->
+    if (compileOnly && graph.allTasks.any { it.name.toLowerCase().contains('release') }) {
+        throw new GradleException('Validation-only builds cannot be released, including via build/assemble aggregate tasks.')
+    }
+}
+
+android {
+    namespace 'cn.zhishang.expression'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'cn.zhishang.expression'
+        minSdk 26
+        targetSdk 35
+        versionCode 5
+        versionName '0.3.0'
+        buildConfigField 'String', 'APP_ORIGIN', '"' + appOrigin + '"'
+        buildConfigField 'boolean', 'VALIDATION_ONLY', compileOnly.toString()
+    }
+    buildFeatures { buildConfig true }
+    buildTypes {
+        debug { applicationIdSuffix '.debug'; versionNameSuffix '-internal' }
+        release { minifyEnabled false }
+    }
+}

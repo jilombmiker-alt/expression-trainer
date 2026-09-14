@@ -18,8 +18,8 @@
     const stopReason = String(options?.stopReason || '');
     const restartCount = Math.max(0, Number(options?.restartCount || 0));
     const maxRestarts = Math.max(1, Number(options?.maxRestarts || 5));
-    if (!intentActive || stopReason === 'manual') return { action: 'stop', reason: 'manual' };
     if (stopReason === 'error') return { action: 'stop', reason: 'error' };
+    if (!intentActive || stopReason === 'manual') return { action: 'stop', reason: 'manual' };
     if (restartCount >= maxRestarts) return { action: 'stop', reason: 'exhausted' };
     return {
       action: 'restart',

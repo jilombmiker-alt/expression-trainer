@@ -2,6 +2,12 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const Speech = require('./speech-adapter');
 
+test('preserves measured no-gap evidence separately from missing recording data', () => {
+  const pauseMeasurement = { method: 'pcm-energy-v1', available: true, intervals: [] };
+  assert.deepEqual(Speech.normalizeResult({text:'测试',pauseMeasurement}).pauseMeasurement,pauseMeasurement);
+  assert.equal(Speech.normalizeResult({text:'测试'}).pauseMeasurement,null);
+});
+
 test('normalizes timestamp pause evidence and requires unknown confidence confirmation', () => {
   const result = Speech.normalizeResult({ text: '测试', pauses: [.2, .8, 2.4, 30], confidence: null, engine: 'funasr' });
   assert.deepEqual(result.pauses, [.8, 2.4]);

@@ -80,7 +80,7 @@ interface Window {
     const timeout = root.setTimeout(() => controller.abort(), timeoutMs);
     try {
       const headers = new Headers(init.headers || {});
-      if (path.startsWith('/api/semantic/')) {
+      if (path.startsWith('/api/semantic/') || path === '/api/training/assess') {
         try {
           const connectionId = root.sessionStorage?.getItem('expression.modelConnection.v1');
           if (connectionId) headers.set('X-Model-Connection', connectionId);

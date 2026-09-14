@@ -20,7 +20,7 @@ test('coach diagnoses at most three issues and asks before answering', () => {
 
 test('coach does not claim pause data without microphone evidence', () => {
   const diagnosis = Coach.diagnose(result(), {}, 0);
-  assert.match(diagnosis.boundary, /未获得麦克风停顿数据/);
+  assert.match(diagnosis.boundary, /没有可用录音间隔数据/);
   assert.equal(diagnosis.issues.some((item) => item.dimension === '停顿与节奏'), false);
 });
 

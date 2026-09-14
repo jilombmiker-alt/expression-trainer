@@ -11,5 +11,5 @@
     "outDir": "web",
     "removeComments": false
   },
-  "include": ["frontend-src/frontend-foundation.ts"]
+  "include": ["frontend-src/*.ts"]
 }

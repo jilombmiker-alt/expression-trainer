@@ -18,14 +18,14 @@
       if (result.oral.counts.fillers) issues.push(issue('口语控制', '填充词打断了信息推进', `检测到 ${result.oral.counts.fillers} 次：${result.oral.groups.fillers.slice(0, 3).map((item) => item.term).join('、')}`, '它们会占用听者注意力，并让观点显得不确定。', '下一次想说填充词时，能否改成一次短暂停顿？'));
       if (result.oral.counts.repetitions) issues.push(issue('语言洁净度', '出现无效重复', `连续重复 ${result.oral.counts.repetitions} 次：${result.oral.cleanliness.repetitions.slice(0, 2).map((item) => item.text).join('、')}`, '同一信息重复启动，会降低表达密度。', '能否停半秒，只保留后面那次完整表达？'));
       if (result.oral.counts.selfCorrections || result.oral.counts.redundancies) issues.push(issue('语义转换', '自我修正或冗余占用了表达空间', `自我修正 ${result.oral.counts.selfCorrections} 次，冗余表达 ${result.oral.counts.redundancies} 处`, '听者需要在多个版本中判断你真正想表达的意思。', '开口前先确定一句主干，再补原因或行动，可以吗？'));
-      if (result.pauses?.length && (result.longestPause >= 3 || result.averagePause > 2.2)) issues.push(issue('停顿与节奏', '长停顿集中在句子中间', `平均 ${result.averagePause.toFixed(1)} 秒，最长 ${result.longestPause.toFixed(1)} 秒`, '语义组被切断，听者需要重新拼接句意。', '先想好下一句关键词，再从完整语义组开始，可以吗？'));
+      if (result.pauses?.length && (result.longestPause >= 3 || result.averagePause > 2.2)) issues.push(issue('停顿与节奏', '录音中有较长间隔', `平均 ${result.averagePause.toFixed(1)} 秒，最长 ${result.longestPause.toFixed(1)} 秒`, '较长间隔可能打断理解，也可能是有意留白；仅凭时长不能判断是否停错位置。', '回想这次长停顿：是在完整观点之后，还是话没说完的时候？'));
       const conciseKey = roundIndex === 0 ? 'semanticConciseness' : 'compressionTime';
       if (Number.isFinite(result.scoring.components[conciseKey]) && result.scoring.components[conciseKey] < 70) issues.push(issue('压缩与转述', '信息还可以更紧凑', `当前有效字数 ${result.oral.charCount}，该项 ${result.scoring.components[conciseKey]} 分`, '重复解释会冲淡中心信息。', '如果只保留“一句中心 + 三个信息点”，你会删掉哪一句？'));
     }
     if (!issues.length) issues.push(issue('迁移表达', '内容已经比较完整', '主要知识点和表达结构均达到当前目标', '下一步需要检验能否换一种对象和场景继续讲清楚。', '能否把它解释给一个完全不了解这件事的人？'));
     return {
       mode: 'guided-retry', provider: 'local-rules', confidence: 'limited', issues: issues.slice(0, 3),
-      boundary: `${result.pauses?.length ? '本次包含带时间戳的麦克风停顿记录' : '本次未获得麦克风停顿数据，不判断停顿节奏'}；${result.content?.method === 'model-hybrid' ? '语义由模型与概念证据共同判断。' : '语义为知识点与关系结构的本地混合暂定判断。'}`
+      boundary: `${result.pauseEvidence?.available ? `本次测得 ${result.pauses.length} 次录音内低音量间隔（≥0.5秒），排除首尾等待；噪声会影响测量，不等于语义停顿` : result.pauses?.length ? '本次包含模型时间戳间隔' : '本次没有可用录音间隔数据；旧记录和文字输入不能补算'}；${result.content?.method === 'model-hybrid' ? '语义由模型与概念证据共同判断。' : '语义为知识点与关系结构的本地混合暂定判断。'}`
     };
   }
   function compare(before, after) {

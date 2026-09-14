@@ -1,0 +1,53 @@
+/* Operate/read: article and answer take priority over auxiliary controls. */
+.wizard-shell .stage-heading h1,.wizard-shell .selection-heading h1{letter-spacing:-.025em}
+.speech-input-help{font-size:12px;color:var(--muted);line-height:1.5}
+.keyboard-input{min-height:44px;background:transparent;border:1px solid var(--line);border-radius:6px;color:var(--ink);cursor:pointer}
+.voice-details{margin-top:8px}.voice-details summary{cursor:pointer;font-size:12px;min-height:36px;align-content:center}
+@media(max-width:900px){
+ .wizard-shell{grid-template-rows:48px minmax(0,1fr) 40px}
+ .wizard-shell .wizard-header{padding:0 12px;gap:4px}.wizard-header nav>button{min-width:24px;padding:0 2px}.wizard-header .header-tools button{padding:0 4px;font-size:11px}
+ .wizard-shell .stage{padding:10px 12px;gap:8px;min-height:0}.wizard-shell .stage-heading{margin:0;flex-shrink:0}
+ .wizard-shell .stage-heading h1,.wizard-shell .selection-heading h1{font-size:20px;line-height:1.25;margin:0}
+ .wizard-shell .stage-heading .eyebrow,.wizard-shell .selection-heading .eyebrow,.wizard-shell .stage-heading>div:first-child>p:last-child,.selection-heading>p:last-child,.round-badge{display:none}
+ .wizard-shell .training-source{padding:0;min-height:36px;border:0;background:transparent;box-shadow:none;gap:8px}
+ .training-source>div{min-width:0}.training-source span,.training-source small{display:none}.training-source b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .training-source .source-change{min-height:36px;padding:0 8px;font-size:12px;flex-shrink:0}
+ .weight-settings{flex-shrink:0;border:0;background:transparent}.weight-settings summary{min-height:32px;padding:0 4px}.weight-settings summary small{display:none}.weight-settings summary b,.weight-settings summary strong{font-size:12px}.weight-settings[open]{max-height:45%;overflow:auto}
+ .stage .reading-layout{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+ .stage .reading-card{flex:1;min-height:0;display:flex;flex-direction:column;padding:14px;border-radius:8px;box-shadow:none}
+ .stage .reading-card header{flex-shrink:0;padding:0 0 8px;gap:8px}.reading-card header span{display:none}.stage .reading-card header h2{font-size:18px;line-height:1.4;margin:0}
+ .stage .word-count{display:flex;align-items:baseline;gap:3px;white-space:nowrap}.stage .word-count b,.stage .word-count span{font-size:12px;display:inline}
+ .stage .reading-card>p{display:block!important;flex:1;min-height:0;margin:4px 0 0;font-size:17px;line-height:1.85;overflow:auto;font-weight:400}.stage .reading-card footer{display:none}
+ .stage .reading-control{flex:0 0 auto;display:grid;grid-template-columns:64px 86px minmax(0,1fr);grid-template-rows:44px;gap:8px;padding:6px 0;border:0;box-shadow:none;background:transparent;align-items:center}
+ .stage .reading-control .timer-ring{grid-column:1;grid-row:1;width:auto;height:44px;margin:0;padding:0;background:none;border:0}.stage .timer-ring>div{display:flex;align-items:center;justify-content:center;position:static;width:100%;height:44px;padding:0;border:0;background:transparent}
+ .stage .timer-ring:before,.stage .timer-ring span,.stage .timer-ring svg,.stage .reading-control>label,.stage .reading-control .quick-note{display:none}.stage .timer-ring strong{font-size:19px;font-variant-numeric:tabular-nums}
+ .stage .reading-control>select{grid-column:2;grid-row:1;margin:0;height:44px;min-height:44px;padding:0 6px;font-size:14px}
+ .stage .reading-control>button{grid-column:3;grid-row:1;margin:0;padding:0 8px;min-height:44px;font-size:13px;white-space:nowrap}.stage[data-step="4"] .reading-control>button{grid-column:2/4}
+ .stage .selection-layout{display:flex;flex-direction:column;gap:10px;min-height:0;flex:1}.stage .selection-panel{order:-1;flex:0 0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent;overflow:visible}
+ .selection-panel>div:first-child{display:none}.stage .selection-panel>label{display:flex;flex-direction:column;gap:5px;margin:0;min-width:0}.selection-panel label>span{font-size:12px}.stage .selection-panel select{min-height:44px;height:44px;font-size:14px;margin:0;padding:0 8px;min-width:0}
+ .selection-panel .selection-actions{grid-column:1/-1;display:flex;gap:8px;margin:0}.selection-actions>button{flex:1;min-height:44px}
+ .stage .selection-panel .import-guide{grid-column:1/-1;margin:0;padding:10px 12px;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--paper)}.import-guide span{font-size:12px}.import-guide b{font-size:13px}
+ .stage .selection-preview{flex:1;min-height:0;max-height:none;padding:14px;overflow:auto;box-shadow:none;border-radius:8px}.selection-preview header{padding-bottom:8px}.selection-preview header h2{font-size:16px}.selection-preview header strong{font-size:14px}.selection-preview>div{margin:12px 0 0}.selection-preview h3{font-size:18px;margin:0 0 8px;line-height:1.4}.stage .selection-preview>div>p:last-child{font-size:15px;line-height:1.8}.selection-preview footer,.selection-preview .eyebrow{display:none}
+ .stage .retell-layout{display:flex;flex-direction:column;flex:1;min-height:0;gap:8px}.stage .voice-card{flex:0 0 auto;padding:8px 10px;box-shadow:none;border-radius:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+ .stage .voice-state{grid-column:1/-1;grid-template-columns:minmax(0,1fr);padding:6px 0;background:transparent;min-height:0}.voice-state .wave-bars,.voice-state>i{display:none}.stage .voice-state b{font-size:13px}.stage .voice-state span{font-size:12px;line-height:1.4}
+ .stage .record-button{min-height:44px;height:44px;margin:0;padding:0 8px;gap:8px}.record-button>span{width:24px;height:24px;border:0}.record-button svg{width:20px}.stage .record-button b{font-size:13px}
+ .keyboard-input{font-size:13px}.voice-details{grid-column:1/-1;margin:0}.voice-details summary{min-height:28px}.voice-details .live-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.stage .live-metrics>div{padding:8px 4px}.live-metrics strong{font-size:17px}.live-metrics span{font-size:11px}.stage .mic-check-button{min-height:36px;margin:6px 0 0;padding:6px}.mic-check-button span{display:none}
+ .stage .transcript-card{flex:1;min-height:0;padding:10px;display:flex!important;flex-direction:column;gap:6px;box-shadow:none;border-radius:8px}.stage .transcript-card label{display:flex;flex-direction:row;justify-content:space-between;font-size:13px;margin:0}.transcript-card label span{display:none}.stage .transcript-card textarea{flex:1;min-height:80px;font-size:17px;line-height:1.7;padding:10px;margin:0;resize:none}.stage .transcript-bottom{margin:0;min-height:28px}.stage .retell-actions{gap:8px;margin:0}.retell-actions button{min-height:44px;padding:0 10px}.speech-input-help:empty,.input-error:empty{display:none}.stage .input-error{margin:0;font-size:12px}
+ .stage .transcript-card:focus-within{min-height:210px}.wizard-footer #footer-hint{display:none}.wizard-shell .wizard-footer{padding:0 12px;font-size:11px}.footer-tools{gap:8px}
+ .stage[data-view="training"] .resume-draft{padding:8px}.resume-draft small{display:none}
+}
+.microphone-signal{grid-column:1/-1;display:flex;align-items:center;gap:8px;margin:4px 0;font-size:12px;line-height:1.5;color:var(--ink)}
+.analysis-layout{grid-template-columns:repeat(3,minmax(0,1fr))}
+.stage .analysis-card>*,.stage .coach-intro>*,.stage .coach-retry>*{flex-shrink:0}
+.stage .habit-list{flex-shrink:0;align-content:flex-start}
+.stage .analysis-card{overflow:auto;overscroll-behavior:contain}
+.stage .pause-method{font-size:12px;line-height:1.5;color:var(--muted);margin:0 0 12px}
+.stage .advice-card ol{margin:12px 0;padding-left:22px;display:grid;gap:16px;font-size:15px;line-height:1.7}
+.stage .advice-card details{font-size:14px;line-height:1.7}.advice-card summary{min-height:44px;cursor:pointer}
+#fullscreen-toggle{background:transparent;color:var(--ink);border:0;min-height:44px;font-size:12px;padding:0 6px}
+@media(max-height:600px) and (max-width:900px){.wizard-header .wizard-brand div{display:none}}
+@media(max-width:900px){.stage .analysis-tabs{flex-shrink:0}.stage .analysis-tabs button{font-size:13px;padding:0 10px;min-height:44px}.stage .panel-picker{gap:8px}.stage .panel-picker select{min-height:44px;max-width:none}.stage .analysis-card header h2{font-size:18px}.stage .analysis-card header>strong{font-size:24px}.stage .analysis-card{padding:12px}.stage .data-grid strong{font-size:15px}.stage .habit-list b,.stage .habit-list em{font-size:13px}.stage .habit-list i{font-size:11px}.stage .coach-intro p{font-size:14px;line-height:1.6}.stage .analysis-footer button{font-size:13px}}
+.microphone-signal[hidden]{display:none}.microphone-signal meter{flex:0 0 48px;width:48px;height:12px}.microphone-signal[data-signal="silent"]{color:var(--danger)}
+.voice-card:has(.microphone-signal:not([hidden])) .wave-bars{display:none}
+@media(max-width:600px){.wizard-header #plans-nav{display:none}.wizard-header #growth-nav{font-size:12px}.wizard-header nav{margin-left:auto}.wizard-shell .wizard-header nav>button i{width:24px;height:24px}.stage .selection-heading{margin:0}.stage .voice-card{padding:8px}}
+@media(max-height:600px) and (max-width:900px){.wizard-shell{grid-template-rows:40px minmax(0,1fr) 32px}.wizard-shell .stage{padding:6px 10px;gap:4px}.stage-heading h1{font-size:17px!important}.stage .weight-settings{display:none}.stage .training-source{min-height:28px}.stage .reading-card{padding:10px}.stage .reading-card header h2{font-size:16px}.stage .voice-state span{display:none}.voice-details{display:none}.stage .reading-card>p{font-size:16px}}

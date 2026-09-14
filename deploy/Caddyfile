@@ -1,0 +1,10 @@
+{$EXPRESSION_DOMAIN} {
+    basic_auth {
+        beta {$BETA_PASSWORD_HASH}
+    }
+    request_body {
+        max_size 22MB
+    }
+    reverse_proxy app:4173
+    header Strict-Transport-Security "max-age=31536000"
+}

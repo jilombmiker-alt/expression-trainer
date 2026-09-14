@@ -5,26 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fafafa">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <title>设置 · 纸上声场</title>
+  <title>设置 · 表达训练器</title>
   <link rel="stylesheet" href="knowledge-studio.css?v=2">
+  <link rel="stylesheet" href="quality-refinements.css?v=1">
 </head>
 <body class="theme-v0 settings-page">
   <a class="skip-link" href="#settings-main">跳到设置内容</a>
   <div class="app-shell">
     <header class="app-header">
-      <a id="settings-brand" class="brand" href="concept-editorial.html?theme=v0" aria-label="返回纸上声场训练页">
+      <a id="settings-brand" class="brand" href="concept-editorial.html?theme=v0" aria-label="返回表达训练器训练页">
         <svg aria-hidden="true" viewBox="0 0 32 32"><path d="M7 5.5h18v21H7zM11 11h10M11 16h10M11 21h6"/></svg>
-        <span>纸上声场</span><small id="settings-brand-subtitle">/ SETTINGS</small>
+        <span>表达训练器</span><small id="settings-brand-subtitle">/ SETTINGS</small>
       </a>
       <nav class="step-nav" aria-label="设置项目">
-        <button class="step-button active" type="button"><b>01</b><span>模型接入</span></button>
+        <button id="model-settings-tab" class="step-button active" type="button" aria-pressed="true"><b>01</b><span>模型接入</span></button>
+        <button id="data-settings-tab" class="step-button" type="button" aria-pressed="false"><b>02</b><span>数据与隐私</span></button>
       </nav>
       <a id="settings-back" class="style-switch" href="concept-editorial.html?theme=v0">返回训练 <span>→</span></a>
     </header>
     <main id="settings-main" class="studio-main">
       <section class="screen-stage settings-stage">
         <div class="screen-intro">
-          <div class="eyebrow"><span>01</span> MODEL CONNECTION</div>
           <h1>设置你的模型，<br>再开始训练。</h1>
           <p id="settings-reason">AI 语义判断会直接调用你选择的模型，费用由你的模型账户承担。</p>
           <dl class="feature-list">
@@ -49,11 +50,33 @@
           </div>
           <button id="return-after-connect" class="continue-training" type="button" hidden>继续刚才的训练 <span aria-hidden="true">→</span></button>
         </form>
+        <section id="data-settings" class="workbench settings-workbench data-workbench" aria-labelledby="data-title" hidden>
+          <div class="data-heading"><h2 id="data-title" tabindex="-1">我的训练数据</h2><button id="refresh-data" type="button" class="ghost-button">刷新</button></div>
+          <label class="data-window" for="data-scope">查看内容<select id="data-scope"><option value="personal">我的训练数据</option><option value="operator">运营后台 · 需要验证</option></select></label>
+          <form id="operator-login" class="operator-login" hidden>
+            <label class="field" for="operator-code"><span>管理员访问码</span><input id="operator-code" type="password" autocomplete="current-password" maxlength="512" required placeholder="与模型 API Key 不同"></label>
+            <p>只有产品负责人可以查看全站汇总。访问码由服务器管理员配置，不要填写模型 Key。</p>
+            <button id="operator-submit" class="primary-action" type="submit">验证并进入后台</button>
+          </form>
+          <button id="operator-logout" class="ghost-button" type="button" hidden>退出管理员身份</button>
+          <label class="data-window" for="data-days">统计范围<select id="data-days"><option value="7">最近 7 天</option><option value="30">最近 30 天</option><option value="90">最近 90 天</option></select></label>
+          <p id="data-status" role="status" aria-live="polite">尚未读取数据。</p>
+          <dl id="data-metrics" class="data-metrics" hidden></dl>
+          <p id="data-boundary">仅显示当前浏览器身份的服务端记录。清除身份 Cookie 或换设备后不能恢复关联；这不是正式账号，也不代表成长等级。</p>
+          <section id="operator-details" hidden><h3>事件与错误</h3><div id="operator-events"></div></section>
+          <div class="privacy-control">
+            <label><input id="analytics-consent" type="checkbox" disabled>允许可选的使用分析</label>
+            <small>默认关闭。开启后收集步骤切换、阅读时长、麦克风错误等事件；不收集转录正文、音频或 API Key。关闭仅停止后续采集。</small>
+            <small>训练内容、作答和评分仍会保存在本服务，用于完成训练与恢复记录；它们不是可选埋点。</small>
+            <p id="privacy-status" role="status" aria-live="polite"></p>
+          </div>
+        </section>
       </section>
     </main>
     <footer class="app-footer"><span>BYOK · 密钥不写入网页与浏览器存储</span><a id="footer-back" href="concept-editorial.html?theme=v0">返回训练</a></footer>
   </div>
   <script src="frontend-foundation.js?v=2"></script>
   <script src="model-connections.js?v=2"></script>
+  <script src="analytics-settings.js?v=1"></script>
 </body>
 </html>

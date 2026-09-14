@@ -26,7 +26,7 @@ PROVIDERS = {
         "adapter": "openai",
         "baseUrl": "https://api.deepseek.com",
         "keyHint": "sk-…",
-        "modelHint": "例如 deepseek-chat",
+        "modelHint": "轻量内测推荐 deepseek-v4-flash；请以你的账户可用型号为准",
     },
     "anthropic": {
         "label": "Anthropic Claude",
@@ -184,6 +184,8 @@ def build_request(settings, prompt, max_tokens=1200, json_mode=True):
         }
         if json_mode:
             body["response_format"] = {"type": "json_object"}
+        if settings.get('provider') == 'deepseek' and settings.get('thinkingMode') in ('disabled', 'enabled'):
+            body['thinking'] = {'type': settings['thinkingMode']}
     elif adapter == "anthropic":
         endpoint = f'{settings["baseUrl"]}/messages'
         headers["x-api-key"] = settings["apiKey"]

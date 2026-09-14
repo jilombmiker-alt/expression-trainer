@@ -12,7 +12,7 @@
 
   const CONCEPTS = {
     editorial: {
-      no: '01', name: '纸上声场', tone: 'EDITORIAL VOICE COACH',
+      no: '01', name: '表达训练器', tone: 'EDITORIAL VOICE COACH',
       headline: '你的表达，\n值得被认真听见。',
       sub: '留一点时间给思考，也留一点空间给停顿。说完一段真实的话，我们只帮你看清习惯、结构和下一步。',
       note: '成熟、温暖、像一本会回应你的练习手册。'

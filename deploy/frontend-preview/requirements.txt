@@ -1,0 +1,4 @@
+# Static frontend host uses only Python's standard library. No third-party packages.
+imageio-ffmpeg==0.6.0
+websockets==14.2
+aiohttp==3.13.5

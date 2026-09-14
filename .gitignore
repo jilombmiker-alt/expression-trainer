@@ -10,6 +10,19 @@ models/sherpa-onnx-*/
 dist/
 .DS_Store
 .idea/
+android/.gradle/
+android/**/build/
+android/local.properties
+*.keystore
+*.jks
+.private-deploy/
+.vefaas/
+
+# Local acceptance notes and screenshots may contain device, account or path metadata.
+PRODUCT.md
+docs/DEPLOYMENT_STAGE_*.md
+docs/BACKEND_P0_ACCEPTANCE_*.md
+docs/evidence/
 
 demo-*.html
 prompt-playground.html

@@ -1,0 +1,9 @@
+{$EXPRESSION_DOMAIN} {
+    # Authentication is enforced by every backend request, including API and static HEAD/GET.
+    # Do not add a second, different Basic Auth password at the proxy.
+    request_body {
+        max_size 22MB
+    }
+    reverse_proxy app:4173
+    header Strict-Transport-Security "max-age=31536000"
+}

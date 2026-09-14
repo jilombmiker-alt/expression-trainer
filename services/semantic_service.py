@@ -149,7 +149,7 @@ def evaluate(data, opener=None, sleeper=None, environ=None, clock=None, settings
             result["_meta"] = {
                 "model": settings["model"], "promptVersion": PROMPT_VERSION,
                 "latencyMs": round((now() - started) * 1000),
-                "attempts": attempt + 1, "usage": {key: usage.get(key) for key in ("prompt_tokens", "completion_tokens", "total_tokens") if usage.get(key) is not None},
+                "attempts": attempt + 1, "usage": normalize_usage(usage),
             }
             return result
         except SemanticServiceError as exc:
@@ -160,6 +160,24 @@ def evaluate(data, opener=None, sleeper=None, environ=None, clock=None, settings
             break
         sleep(0.2 * (attempt + 1))
     raise last_error or SemanticServiceError("semantic_model_failed", "语义模型暂时不可用。")
+
+
+def normalize_usage(usage):
+    """Keep absent usage unknown; normalize OpenAI, Anthropic and Gemini counters."""
+    result = {}
+    for target, candidates in {
+        'prompt_tokens': ('prompt_tokens', 'input_tokens', 'promptTokenCount'),
+        'completion_tokens': ('completion_tokens', 'output_tokens', 'candidatesTokenCount'),
+        'total_tokens': ('total_tokens', 'totalTokenCount'),
+    }.items():
+        for key in candidates:
+            value = usage.get(key)
+            if type(value) is int and value >= 0:
+                result[target] = value
+                break
+    if 'total_tokens' not in result and 'prompt_tokens' in result and 'completion_tokens' in result:
+        result['total_tokens'] = result['prompt_tokens'] + result['completion_tokens']
+    return result
 
 
 def health(environ=None):

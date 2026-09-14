@@ -61,12 +61,9 @@
     const theme = document.body.classList.contains('theme-programa') ? 'programa' : 'v0';
     const trainingUrl = `concept-editorial.html?source=knowledge&theme=${theme}&autostart=1`;
     localStorage.removeItem('expression.trainingDraft.v1');
+    window.ExpressionPreview?.storage.removeItem('expression.trainingDraft.v1');
     sessionStorage.setItem('expression.trainingCard', JSON.stringify({ card: generatedCard, duration: Number(duration.value), theme, sourceName }));
-    if (!sessionStorage.getItem('expression.modelConnection.v1')) {
-      sessionStorage.setItem('expression.afterModelConnect.v1', trainingUrl);
-      window.location.href = `settings.html?theme=${theme}&section=model&required=1`;
-      return;
-    }
+    // The training entry resolves server-funded beta versus BYOK once, for both import and templates.
     window.location.href = trainingUrl;
   }
 

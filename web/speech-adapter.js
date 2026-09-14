@@ -28,7 +28,8 @@
       text: String(data?.text || '').trim(), engine: data?.engine || 'funasr', confidence, pauses,
       durationMs: Number(data?.durationMs || 0), segments: Array.isArray(data?.segments) ? data.segments : [],
       needsConfirmation: data?.needsConfirmation === true || confidence === null || confidence < .72,
-      warning: String(data?.warning || '')
+      warning: String(data?.warning || ''),
+      pauseMeasurement: data?.pauseMeasurement?.method === 'pcm-energy-v1' ? data.pauseMeasurement : null
     };
   }
   async function transcribe(blob, options, fetcher) {
